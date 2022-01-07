@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace Nova.Framework.Dependency
 {
@@ -20,5 +22,12 @@ namespace Nova.Framework.Dependency
         /// <typeparam name="T">The dependency type.</typeparam>
         /// <returns>The dependency or null if not found.</returns>
         T Inject<T>();
+
+        /// <summary>
+        /// Retrieves all cached dependency of type <paramref name="T"/>.
+        /// </summary>
+        /// <typeparam name="T">The dependency type.</typeparam>
+        /// <returns>All dependencies or null if none is found.</returns>
+        IEnumerable<T> InjectAll<T>();
     }
 }

@@ -80,6 +80,21 @@ namespace Nova.Framework.Tests.Dependency
             Assert.AreEqual(1, (container.Inject<DerivedObject>()).Value);
         }
 
+        [Test]
+        public void Should_Return_All_Dependency()
+        {
+            IDependencyContainer parentContainer = new DependencyContainer();
+            parentContainer.Cache(typeof(DerivedObject), new DerivedObject() { Value = 1 });
+            parentContainer.Cache(typeof(DerivedObject), new DerivedObject() { Value = 2 });
+            parentContainer.Cache(typeof(DerivedObject), new DerivedObject() { Value = 3 });
+
+            IDependencyContainer container = new DependencyContainer(parentContainer);
+            container.Cache(typeof(DerivedObject), new DerivedObject() { Value = 4 });
+            container.Cache(typeof(DerivedObject), new DerivedObject() { Value = 5 });
+
+            Assert.AreEqual(5, (container.InjectAll<DerivedObject>()).Count());
+        }
+
         private interface IBaseInterface { }
 
         private class DerivedObject : IBaseInterface
