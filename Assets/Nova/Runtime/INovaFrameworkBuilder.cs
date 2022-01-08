@@ -5,7 +5,7 @@ namespace Nova.Framework
     /// <summary>
     /// Defines a class that provides the mechanisms to configure an nova application.
     /// </summary>
-    public interface INovaFrameworkBuilder
+    public interface INovaFrameworkBuilder : IDisposable
     {
         /// <summary>
         /// The configuration. Use the settings element to configure the nova framework instance.

@@ -50,7 +50,7 @@ namespace Nova.Framework.Dependency
         /// Creates a new instance of
         /// </summary>
         /// <param name="type"></param>
-        /// <param name="dependency"></param>
+        /// <param name="dependencies"></param>
         public static IDependencyEntry Create(Type type, params object[] dependencies)
         {
             IDependencyEntry entry = new DependencyEntry(type);
