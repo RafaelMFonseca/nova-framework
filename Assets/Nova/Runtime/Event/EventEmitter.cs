@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace Nova.Framework.Event
 {
+    /// <inheritdoc />
     [Serializable]
     public class EventEmitter : IEventEmitter
     {
