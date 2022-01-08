@@ -116,7 +116,7 @@ namespace Nova.Framework.Tests.Dependency
         }
 
         [Test]
-        public void Should_Return_Dependencies_In_Same_Order_When_Added()
+        public void Should_Return_Dependencies_In_Same_Order_As_When_Added()
         {
             IDependencyContainer parentContainer = new DependencyContainer();
             parentContainer.Bind(typeof(IBaseInterface), new OtherDerivedObject() { Value = 20 });

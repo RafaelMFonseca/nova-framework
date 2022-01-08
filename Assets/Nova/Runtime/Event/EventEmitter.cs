@@ -31,6 +31,11 @@ namespace Nova.Framework.Event
             if (_listeners.TryGetValue(name, out List<Action<EventParameter>> listeners))
             {
                 listeners.Remove(handler);
+
+                if (listeners.Count == 0)
+                {
+                    _listeners.Remove(name);
+                }
             }
         }
 
@@ -40,6 +45,8 @@ namespace Nova.Framework.Event
             if (_listeners.TryGetValue(name, out List<Action<EventParameter>> listeners))
             {
                 listeners.Clear();
+
+                _listeners.Remove(name);
             }
         }
 
@@ -54,6 +61,12 @@ namespace Nova.Framework.Event
 
                 invoker.Emit(listeners, parameter);
             }
+        }
+
+        /// <inheritdoc />
+        void IDisposable.Dispose()
+        {
+            _listeners.Clear();
         }
     }
 }

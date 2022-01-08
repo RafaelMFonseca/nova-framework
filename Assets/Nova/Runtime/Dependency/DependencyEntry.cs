@@ -51,10 +51,14 @@ namespace Nova.Framework.Dependency
         /// </summary>
         /// <param name="type"></param>
         /// <param name="dependency"></param>
-        public static IDependencyEntry Create(Type type, object dependency)
+        public static IDependencyEntry Create(Type type, params object[] dependencies)
         {
             IDependencyEntry entry = new DependencyEntry(type);
-            entry.AddDependency(dependency);
+
+            foreach (object dependency in dependencies)
+            {
+                entry.AddDependency(dependency);
+            }
 
             return entry;
         }

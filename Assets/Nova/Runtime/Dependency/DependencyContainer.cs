@@ -86,11 +86,7 @@ namespace Nova.Framework.Dependency
             return dependencies;
         }
 
-        IDependencyEntry FindDependencyEntry(Type type)
-        {
-            return _cache.Find(d => d.Type == type);
-        }
-
+        /// <inheritdoc />
         void IDisposable.Dispose()
         {
             foreach (IDependencyEntry entry in _cache)
@@ -99,6 +95,11 @@ namespace Nova.Framework.Dependency
             }
 
             _cache.Clear();
+        }
+
+        IDependencyEntry FindDependencyEntry(Type type)
+        {
+            return _cache.Find(d => d.Type == type);
         }
     }
 }

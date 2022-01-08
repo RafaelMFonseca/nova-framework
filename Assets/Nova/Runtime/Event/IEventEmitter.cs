@@ -6,13 +6,14 @@ namespace Nova.Framework.Event
     /// A holder to emit custom events, and register handlers for those events
     /// by subscribing to an instance.
     /// </summary>
-    public interface IEventEmitter
+    public interface IEventEmitter: IDisposable
     {
         /// <summary>
         /// Sets a new delegate for given event to be called when he is emitted.
         /// </summary>
         /// <param name="name">The event name identifier, must be unique.</param>
         /// <param name="handler">The delegate emitted for this event.</param>
+        /// <returns>A subscription to unsubscribe this event.</returns>
         IEventEmitterSubscription Subscribe(EventName name, Action<EventParameter> handler);
 
         /// <summary>
