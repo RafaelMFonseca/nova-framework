@@ -9,7 +9,7 @@ namespace Nova.Framework.Event
         private readonly Dictionary<EventName, List<Action<EventParameter>>> _listeners = new Dictionary<EventName, List<Action<EventParameter>>>();
 
         /// <inheritdoc />
-        void IEventEmitter.Subscribe(EventName name, Action<EventParameter> handler)
+        IEventEmitterSubscription IEventEmitter.Subscribe(EventName name, Action<EventParameter> handler)
         {
             List<Action<EventParameter>> listeners;
 
@@ -21,6 +21,8 @@ namespace Nova.Framework.Event
             {
                 listeners.Add(handler);
             }
+
+            return new EventEmitterSubscription(() => (this as IEventEmitter).Unsubscribe(name, handler));
         }
 
         /// <inheritdoc />

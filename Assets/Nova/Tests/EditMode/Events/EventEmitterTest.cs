@@ -119,5 +119,26 @@ namespace Nova.Framework.Tests.Event
 
             Assert.AreEqual(0, eventRaisedCount);
         }
+
+        [Test]
+        public void Should_Unsubscribe_With_Subscription()
+        {
+            int eventRaisedCount = 0;
+
+            EventName onResolutionChange = new EventName("onResolutionChange");
+
+            IEventEmitter eventEmitter = new EventEmitter();
+
+            eventEmitter.Subscribe(onResolutionChange, (p) => eventRaisedCount++);
+            IEventEmitterSubscription subscription = eventEmitter.Subscribe(onResolutionChange, (p) => eventRaisedCount++);
+            eventEmitter.Subscribe(onResolutionChange, (p) => eventRaisedCount++);
+            eventEmitter.Subscribe(onResolutionChange, (p) => eventRaisedCount++);
+
+            subscription.Unsubscribe();
+
+            eventEmitter.Emit(onResolutionChange, new EventParameter());
+
+            Assert.AreEqual(3, eventRaisedCount);
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Nova.Framework.Dependency;
+﻿using Nova.Framework.Event;
+using Nova.Framework.Dependency;
 
 namespace Nova.Framework.Core
 {
@@ -11,6 +12,7 @@ namespace Nova.Framework.Core
         /// Method invoked when object is ready and has a dependency container.
         /// </summary>
         /// <param name="container">The container for this object.</param>
-        void Load(IDependencyContainer container);
+        /// <param name="eventEmitter">The event emitter for this object.</param>
+        void Load(IDependencyContainer container, IEventEmitter emitter);
     }
 }

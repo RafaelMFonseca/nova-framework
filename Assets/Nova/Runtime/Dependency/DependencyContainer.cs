@@ -20,7 +20,7 @@ namespace Nova.Framework.Dependency
         }
 
         /// <inheritdoc />
-        void IDependencyContainer.Cache(Type type, object instance)
+        void IDependencyContainer.Bind(Type type, object instance)
         {
             IDependencyEntry entry = FindDependencyEntry(type);
 
@@ -31,6 +31,20 @@ namespace Nova.Framework.Dependency
             else
             {
                 entry.AddDependency(instance);
+            }
+        }
+
+        /// <inheritdoc />
+        void IDependencyContainer.Unbind(object instance)
+        {
+            foreach (IDependencyEntry entry in _cache)
+            {
+                entry.RemoveDependency(instance);
+            }
+
+            if (_parent != null)
+            {
+                _parent.Unbind(instance);
             }
         }
 
@@ -75,6 +89,16 @@ namespace Nova.Framework.Dependency
         IDependencyEntry FindDependencyEntry(Type type)
         {
             return _cache.Find(d => d.Type == type);
+        }
+
+        void IDisposable.Dispose()
+        {
+            foreach (IDependencyEntry entry in _cache)
+            {
+                entry.ClearDependencies();
+            }
+
+            _cache.Clear();
         }
     }
 }

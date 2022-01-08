@@ -13,7 +13,7 @@ namespace Nova.Framework.Event
         /// </summary>
         /// <param name="name">The event name identifier, must be unique.</param>
         /// <param name="handler">The delegate emitted for this event.</param>
-        void Subscribe(EventName name, Action<EventParameter> handler);
+        IEventEmitterSubscription Subscribe(EventName name, Action<EventParameter> handler);
 
         /// <summary>
         /// Removes a delegate from this event.
