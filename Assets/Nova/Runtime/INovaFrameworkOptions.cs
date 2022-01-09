@@ -14,11 +14,5 @@ namespace Nova.Framework
         /// <param name="serviceType">The contract for the service.</param>
         /// <param name="concreteType">The concrete type that implements the service.</param>
         void AddSingleton(Type serviceType, Type concreteType);
-
-        /// <summary>
-        /// Specify a factory that creates the startup instance to be used by the <see cref="INovaFrameworkBuilder"/>.
-        /// </summary>
-        /// <param name="startupType">The type to startupe.</param>
-        void Startup(Type startupType);
     }
 }

@@ -13,6 +13,6 @@ namespace Nova.Framework.Core
         /// </summary>
         /// <param name="container">The container for this object.</param>
         /// <param name="emitter">The event emitter for this object.</param>
-        void Load(IDependencyContainer container, IEventEmitter emitter);
+        void OnLoad(IDependencyContainer container);
     }
 }

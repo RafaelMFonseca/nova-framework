@@ -23,11 +23,5 @@ namespace Nova.Framework
         {
             _container.Bind(serviceType, Activator.CreateInstance(concreteType));
         }
-
-        /// <inheritdoc />
-        void INovaFrameworkOptions.Startup(Type startupType)
-        {
-            Check.NotNull(startupType, nameof(startupType));
-        }
     }
 }
