@@ -19,9 +19,11 @@ namespace Nova.Framework
         }
 
         /// <inheritdoc />
-        void INovaFrameworkOptions.AddSingleton(Type serviceType, Type concreteType)
+        INovaFrameworkOptions INovaFrameworkOptions.AddSingleton(Type serviceType, Type concreteType)
         {
             _container.Bind(serviceType, Activator.CreateInstance(concreteType));
+
+            return this;
         }
     }
 }

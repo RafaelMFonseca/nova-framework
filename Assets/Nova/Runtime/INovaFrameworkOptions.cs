@@ -13,6 +13,6 @@ namespace Nova.Framework
         /// </summary>
         /// <param name="serviceType">The contract for the service.</param>
         /// <param name="concreteType">The concrete type that implements the service.</param>
-        void AddSingleton(Type serviceType, Type concreteType);
+        INovaFrameworkOptions AddSingleton(Type serviceType, Type concreteType);
     }
 }
