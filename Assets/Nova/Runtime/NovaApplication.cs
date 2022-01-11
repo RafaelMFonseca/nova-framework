@@ -38,7 +38,7 @@ namespace Nova.Framework
         }
 
         /// <inheritdoc />
-        public INovaFrameworkBuilder Build()
+        public INovaFrameworkBuilder Start()
         {
             return this;
         }

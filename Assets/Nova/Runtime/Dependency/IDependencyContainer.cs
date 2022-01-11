@@ -6,7 +6,7 @@ namespace Nova.Framework.Dependency
     /// <summary>
     /// Dependency container capable of inject and retrieve dependencies bases on types.
     /// </summary>
-    public interface IDependencyContainer : IDisposable
+    public interface IDependencyContainer : IDisposable, IEnumerable<IDependencyEntry>
     {
         /// <summary>
         /// Caches a dependency based on given type.

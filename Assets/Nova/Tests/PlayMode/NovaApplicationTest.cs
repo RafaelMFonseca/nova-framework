@@ -13,52 +13,21 @@ namespace Nova.Framework.Tests
 {
     public class NovaApplicationTest
     {
-        [OneTimeSetUp]
-        public void LoadScene()
-        {
-            SceneManager.LoadScene("SampleScene");
-        }
-
         [UnityTest]
         public IEnumerator Should_Create_Application_Then_Start_Screen()
         {
-            SampleNovaGameApplication application = null;
-            SampleNovaGameScreen screen = null;
-
-            GameObject gameObjectApp = null;
-            GameObject gameObjectScreen = null;
-
-            Assert.DoesNotThrow(() =>
-            {
-                gameObjectApp = new GameObject();
-                gameObjectApp.name = "Bootstrap";
-                application = gameObjectApp.AddComponent<SampleNovaGameApplication>();
-
-                gameObjectScreen = new GameObject();
-                gameObjectScreen.name = "ScreenRoot";
-                screen = gameObjectScreen.AddComponent<SampleNovaGameScreen>();
-            });
-
-            yield return new WaitForFixedUpdate();
-
-            Assert.DoesNotThrow(() =>
-            {
-                GameObject.Destroy(gameObjectApp);
-                GameObject.Destroy(screen);
-            });
-
-            yield return new WaitForFixedUpdate();
-
-            Assert.IsTrue(
-                   application._startWasCalled
-                && application._withSettingsWasCalled
-                && application._destroyWasCalled);
+            yield return new MonoBehaviourTest<SampleNovaGameApplication>();
         }
 
-        private class SampleNovaGameApplication : MonoBehaviour
+        private interface IWeatherController { }
+
+        private class WeatherController : IWeatherController, IController { }
+
+        private class SampleNovaGameApplication : MonoBehaviour, IMonoBehaviourTest
         {
             private INovaFrameworkBuilder _application;
-            public bool _startWasCalled, _withSettingsWasCalled, _destroyWasCalled;
+
+            public bool IsTestFinished => true;
 
             public void Start()
             {
@@ -67,18 +36,15 @@ namespace Nova.Framework.Tests
                 _application.WithSettings(options =>
                 {
                     options.WithScreenFinder(typeof(SceneRootGameObjectsScreenFinder));
-
-                    _withSettingsWasCalled = true;
+                    options.AddSingleton(typeof(IWeatherController), typeof(WeatherController));
                 });
 
-                _startWasCalled = true;
+                _application.Start();
             }
 
             public void OnDestroy()
             {
                 _application.Dispose();
-
-                _destroyWasCalled = true;
             }
         }
 
@@ -89,8 +55,11 @@ namespace Nova.Framework.Tests
 
         private class MainMenuScreen : IScreen, ILoadable, IStartable
         {
+            private IWeatherController _weatherController;
+
             void ILoadable.OnLoad(IDependencyContainer container)
             {
+                _weatherController = container.Inject<IWeatherController>();
             }
 
             void IStartable.OnStart()

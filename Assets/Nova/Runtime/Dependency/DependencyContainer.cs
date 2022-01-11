@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
+using System.Collections;
 
 namespace Nova.Framework.Dependency
 {
@@ -100,6 +101,18 @@ namespace Nova.Framework.Dependency
         IDependencyEntry FindDependencyEntry(Type type)
         {
             return _cache.Find(d => d.Type == type);
+        }
+
+        /// <inheritdoc />
+        IEnumerator<IDependencyEntry> IEnumerable<IDependencyEntry>.GetEnumerator()
+        {
+            return _cache.GetEnumerator();
+        }
+
+        /// <inheritdoc />
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return _cache.GetEnumerator();
         }
     }
 }

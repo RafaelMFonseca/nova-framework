@@ -1,6 +1,5 @@
 ﻿using System;
 using Nova.Framework.Dependency;
-using Nova.Framework.Shared;
 
 namespace Nova.Framework
 {

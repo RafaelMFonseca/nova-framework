@@ -15,9 +15,10 @@ namespace Nova.Framework
         INovaFrameworkBuilder WithSettings(Action<INovaFrameworkOptions> settings);
 
         /// <summary>
-        /// Creates a new <see cref="INovaFrameworkBuilder"/>.
+        /// Starts the nova application, also runs ILoadable and IStartabke of all controllers registered
+        /// with the options.
         /// </summary>
         /// <returns>The new <see cref="INovaFrameworkBuilder"/>.</returns>
-        INovaFrameworkBuilder Build();
+        INovaFrameworkBuilder Start();
     }
 }
