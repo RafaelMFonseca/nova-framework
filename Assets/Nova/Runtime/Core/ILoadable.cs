@@ -1,5 +1,4 @@
-﻿using Nova.Framework.Event;
-using Nova.Framework.Dependency;
+﻿using Nova.Framework.Dependency;
 
 namespace Nova.Framework.Core
 {
@@ -9,10 +8,15 @@ namespace Nova.Framework.Core
     public interface ILoadable
     {
         /// <summary>
+        /// Method invoked when object being loaded and has a dependency container.
+        /// </summary>
+        /// <param name="container">The container for this object.</param>
+        void OnPreLoad(IDependencyContainer container);
+
+        /// <summary>
         /// Method invoked when object is ready and has a dependency container.
         /// </summary>
         /// <param name="container">The container for this object.</param>
-        /// <param name="emitter">The event emitter for this object.</param>
         void OnLoad(IDependencyContainer container);
     }
 }

@@ -7,6 +7,10 @@
     public interface IStartable
     {
         /// <summary>
+        /// Method invoked when the component is being loaded.
+        /// </summary>
+        void OnAwake();
+        /// <summary>
         /// Method invoked when the component is ready to start, having
         /// received its initial parameters.
         /// </summary>

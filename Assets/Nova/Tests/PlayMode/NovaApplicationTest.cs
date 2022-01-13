@@ -4,10 +4,11 @@ using UnityEngine;
 using UnityEngine.TestTools;
 using UnityEngine.SceneManagement;
 using NUnit.Framework;
-using Nova.Framework.Screen;
 using Nova.Framework.Core;
 using Nova.Framework.Dependency;
 using Nova.Framework.Controller;
+using Nova.Framework.Entity;
+using Nova.Framework.Entity.Component;
 
 namespace Nova.Framework.Tests
 {
@@ -19,9 +20,9 @@ namespace Nova.Framework.Tests
             yield return new MonoBehaviourTest<SampleNovaGameApplication>();
         }
 
-        private interface IWeatherController { }
+        private interface IWeatherController : IController { }
 
-        private class WeatherController : IWeatherController, IController { }
+        private class WeatherController : IWeatherController { }
 
         private class SampleNovaGameApplication : MonoBehaviour, IMonoBehaviourTest
         {
@@ -35,7 +36,6 @@ namespace Nova.Framework.Tests
 
                 _application.WithSettings(options =>
                 {
-                    options.WithScreenFinder(typeof(SceneRootGameObjectsScreenFinder));
                     options.AddSingleton(typeof(IWeatherController), typeof(WeatherController));
                 });
 
@@ -48,40 +48,30 @@ namespace Nova.Framework.Tests
             }
         }
 
-        private class SampleNovaGameScreen : MonoBehaviour, IScreenRoot
+        private class WorldComponent_Entity : EntityBase
         {
-            Type IScreenRoot.GetScreenRootType() => typeof(MainMenuScreen);
+            private IWorldComponent worldComponent = new WorldComponent();
+
+            public override IComponent[] GetComponents() => new[] { worldComponent };
         }
 
-        private class MainMenuScreen : IScreen, ILoadable, IStartable
+        private interface IWorldComponent : IComponent { }
+
+        private class WorldComponent : IWorldComponent, IStartable, IUpdateable, IDestroyable, ILoadable
         {
-            private IWeatherController _weatherController;
+            void ILoadable.OnPreLoad(IDependencyContainer container) { }
 
-            void ILoadable.OnLoad(IDependencyContainer container)
-            {
-                _weatherController = container.Inject<IWeatherController>();
-            }
+            void ILoadable.OnLoad(IDependencyContainer container) { }
 
-            void IStartable.OnStart()
-            {
+            void IStartable.OnAwake() { }
 
-            }
+            void IStartable.OnStart() { }
+
+            void IUpdateable.OnUpdate() { }
+
+            void IUpdateable.OnLateUpdate() { }
+
+            void IDestroyable.OnDestroy() { }
         }
-
-        //private class RandomGameObject : MonoBehaviour, IModel, ILoadable, IStartable, IUpdateable
-        //{
-        //    void ILoadable.OnLoad(IDependencyContainer container) { }
-
-        //    void IModel.CreateGameObject()
-        //    {
-
-        //    }
-
-        //    void IStartable.OnStart() { }
-
-        //    void IUpdateable.OnUpdate() { }
-
-        //    void IUpdateable.OnLateUpdate() { }
-        //}
     }
 }
