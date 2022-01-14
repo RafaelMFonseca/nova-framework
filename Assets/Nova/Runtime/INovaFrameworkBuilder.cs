@@ -1,4 +1,5 @@
 ﻿using System;
+using Nova.Framework.Dependency;
 
 namespace Nova.Framework
 {
@@ -7,6 +8,11 @@ namespace Nova.Framework
     /// </summary>
     public interface INovaFrameworkBuilder : IDisposable
     {
+        /// <summary>
+        /// Global container being used by this application.
+        /// </summary>
+        public IDependencyContainer Container { get; }
+
         /// <summary>
         /// The configuration. Use the settings element to configure the nova framework instance.
         /// </summary>
@@ -20,5 +26,10 @@ namespace Nova.Framework
         /// </summary>
         /// <returns>The new <see cref="INovaFrameworkBuilder"/>.</returns>
         INovaFrameworkBuilder Start();
+
+        /// <summary>
+        /// The application currently running and active.
+        /// </summary>
+        public static INovaFrameworkBuilder ActiveInstance { get; set; }
     }
 }

@@ -1,11 +1,12 @@
-﻿using Nova.Framework.Entity.Component;
+﻿using System.Collections.Generic;
+using Nova.Framework.Entity.Component;
 
 namespace Nova.Framework.Entity
 {
     /// <summary>
     /// Represents an entity.
     /// </summary>
-    public interface IEntity
+    public interface IEntity : IEnumerable<IComponent>
     {
         /// <summary>
         /// Components for this entity.

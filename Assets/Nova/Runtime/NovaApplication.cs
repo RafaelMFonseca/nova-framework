@@ -10,6 +10,9 @@ namespace Nova.Framework
     /// </summary>
     public sealed class NovaApplication : INovaFrameworkBuilder
     {
+        /// <inheritdoc />
+        public IDependencyContainer Container => _container;
+
         private readonly IDependencyContainer _container;
         private readonly INovaFrameworkOptions _options;
         private readonly IEventEmitter _eventEmitter;
@@ -40,6 +43,8 @@ namespace Nova.Framework
         /// <inheritdoc />
         public INovaFrameworkBuilder Start()
         {
+            INovaFrameworkBuilder.ActiveInstance = this;
+
             return this;
         }
 

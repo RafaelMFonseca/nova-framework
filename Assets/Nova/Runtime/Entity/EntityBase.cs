@@ -1,26 +1,33 @@
-﻿using UnityEngine;
+﻿using System;
 using System.Linq;
+using System.Collections;
 using System.Collections.Generic;
-using Nova.Framework.Entity.Component;
-using Nova.Framework.Core;
 using System.Collections.ObjectModel;
-using System;
+using UnityEngine;
+using Nova.Framework.Core;
+using Nova.Framework.Dependency;
+using Nova.Framework.Entity.Component;
 
 namespace Nova.Framework.Entity
 {
+    /// <summary>
+    /// Base class implementation of an <see cref="IEntity"/>.
+    /// </summary>
+    [Serializable]
     public abstract class EntityBase : MonoBehaviour, IEntity
     {
         private ReadOnlyCollection<IComponent> _components;
 
+        /// <inheritdoc />
         public abstract IComponent[] GetComponents();
 
-        public void Awake()
+        public virtual void Awake()
         {
             _components = Array.AsReadOnly(GetComponents());
 
             foreach (ILoadable loadable in GetLoadableComponents())
             {
-                // loadable.OnPreLoad();
+                DependencyActivator.PreActivate(loadable);
             }
 
             foreach (IStartable startable in GetStartableComponents())
@@ -29,11 +36,11 @@ namespace Nova.Framework.Entity
             }
         }
 
-        public void Start()
+        public virtual void Start()
         {
             foreach (ILoadable loadable in GetLoadableComponents())
             {
-                // loadable.OnLoad();
+                DependencyActivator.Activate(loadable);
             }
 
             foreach (IStartable startable in GetStartableComponents())
@@ -42,7 +49,7 @@ namespace Nova.Framework.Entity
             }
         }
 
-        public void OnEnable()
+        public virtual void OnEnable()
         {
             foreach (IEnableable enableable in GetEnableableComponents())
             {
@@ -50,7 +57,7 @@ namespace Nova.Framework.Entity
             }
         }
 
-        public void OnDisable()
+        public virtual void OnDisable()
         {
             foreach (IEnableable enableable in GetEnableableComponents())
             {
@@ -58,13 +65,19 @@ namespace Nova.Framework.Entity
             }
         }
 
-        public void OnDestroy()
+        public virtual void OnDestroy()
         {
             foreach (IDestroyable destroyable in GetDestroyableComponents())
             {
                 destroyable.OnDestroy();
             }
         }
+
+        /// <inheritdoc />
+        IEnumerator<IComponent> IEnumerable<IComponent>.GetEnumerator() => _components.GetEnumerator();
+
+        /// <inheritdoc />
+        IEnumerator IEnumerable.GetEnumerator() => _components.GetEnumerator();
 
         /// <summary>
         /// Gets all components in the entity that directly derive from IStartable.
