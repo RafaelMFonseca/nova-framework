@@ -23,6 +23,7 @@ namespace Nova.Framework.Tests
         private class SampleApplicationResult
         {
             public bool onPreLoad, onLoad, onAwake, onStart, onUpdate, onLateUpdate, onDestroy, onEnable, onDisable = false;
+            public bool AllTrue => onPreLoad && onLoad && onAwake && onStart && onUpdate && onLateUpdate && onEnable && onDisable && onDestroy;
         }
 
         private interface IWeatherController : IController { }
@@ -32,21 +33,16 @@ namespace Nova.Framework.Tests
         private class SampleNovaGameApplication : MonoBehaviour, IMonoBehaviourTest
         {
             private INovaFrameworkBuilder _application;
-            private WorldComponent_Entity _worldComponentEntity;
             private GameObject _worldComponentGO;
-            private SampleApplicationResult _sampleApplicationResult;
+            private WorldComponent_Entity[] _worldComponentEntities;
+            private SampleApplicationResult[] _sampleApplicationResults;
 
             public bool IsTestFinished =>
-                   _sampleApplicationResult != null
-                && _sampleApplicationResult.onPreLoad
-                && _sampleApplicationResult.onLoad
-                && _sampleApplicationResult.onAwake
-                && _sampleApplicationResult.onStart
-                && _sampleApplicationResult.onUpdate
-                && _sampleApplicationResult.onLateUpdate
-                && _sampleApplicationResult.onEnable
-                && _sampleApplicationResult.onDisable
-                && _sampleApplicationResult.onDestroy;
+                   _sampleApplicationResults != null
+                && _sampleApplicationResults[0] != null
+                && _sampleApplicationResults[0].AllTrue
+                && _sampleApplicationResults[1] != null
+                && _sampleApplicationResults[1].AllTrue;
 
             public void Awake()
             {
@@ -63,8 +59,16 @@ namespace Nova.Framework.Tests
             public void Start()
             {
                 _worldComponentGO = new GameObject();
-                _worldComponentEntity = _worldComponentGO.AddComponent<WorldComponent_Entity>();
-                _sampleApplicationResult = _worldComponentEntity.sampleApplicationResult;
+
+                _worldComponentEntities = new WorldComponent_Entity[2];
+                _sampleApplicationResults = new SampleApplicationResult[2];
+
+                _worldComponentEntities[0] = _worldComponentGO.AddComponent<WorldComponent_Entity>();
+                _sampleApplicationResults[0] = _worldComponentEntities[0].sampleApplicationResult;
+
+                _worldComponentEntities[1] = _worldComponentGO.AddComponent<WorldComponent_Entity>();
+                _sampleApplicationResults[1] = _worldComponentEntities[1].sampleApplicationResult;
+
                 StartCoroutine(DestroyAfterSeconds(0.1f));
             }
 
@@ -74,7 +78,8 @@ namespace Nova.Framework.Tests
 
                 yield return new WaitForSeconds(seconds);
 
-                _worldComponentEntity.enabled = false;
+                _worldComponentEntities[0].enabled = false;
+                _worldComponentEntities[1].enabled = false;
 
                 yield return null;
 
@@ -99,7 +104,7 @@ namespace Nova.Framework.Tests
 
             public override IComponent[] GetComponents()
             {
-                return new[] { new WorldComponent(this, sampleApplicationResult) };
+                return new[] { new WorldComponent(sampleApplicationResult) };
             }
         }
 
@@ -107,12 +112,10 @@ namespace Nova.Framework.Tests
 
         private class WorldComponent : IWorldComponent, IStartable, IUpdateable, IDestroyable, IEnableable, ILoadable
         {
-            private WorldComponent_Entity _worldComponentEntity;
             private SampleApplicationResult _sampleApplicationResult;
 
-            public WorldComponent(WorldComponent_Entity entity, SampleApplicationResult sampleApplicationResult)
+            public WorldComponent(SampleApplicationResult sampleApplicationResult)
             {
-                _worldComponentEntity = entity;
                 _sampleApplicationResult = sampleApplicationResult;
             }
 
