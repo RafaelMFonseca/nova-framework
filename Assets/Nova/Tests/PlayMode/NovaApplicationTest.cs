@@ -22,8 +22,8 @@ namespace Nova.Framework.Tests
 
         private class SampleApplicationResult
         {
-            public bool onPreLoad, onLoad, onAwake, onStart, onUpdate, onLateUpdate, onDestroy, onEnable, onDisable = false;
-            public bool AllTrue => onPreLoad && onLoad && onAwake && onStart && onUpdate && onLateUpdate && onEnable && onDisable && onDestroy;
+            public bool onPreLoad, onLoad, onAwake, onStart, onFixedUpdate, onUpdate, onLateUpdate, onDestroy, onEnable, onDisable = false;
+            public bool AllTrue => onPreLoad && onLoad && onAwake && onStart && onFixedUpdate && onUpdate && onLateUpdate && onEnable && onDisable && onDestroy;
         }
 
         private interface IWeatherController : IController { }
@@ -108,7 +108,7 @@ namespace Nova.Framework.Tests
             }
         }
 
-        private interface IWorldComponent : IInitializable, IAwakeable, IStartable, IUpdateable, ILateUpdateable, IDestroyable, IEnableable, IDisableable, ILoadable, IComponent { }
+        private interface IWorldComponent : IInitializable, IAwakeable, IStartable, IFixedUpdateable, IUpdateable, ILateUpdateable, IDestroyable, IEnableable, IDisableable, ILoadable, IComponent { }
 
         private class WorldComponent : IWorldComponent
         {
@@ -126,6 +126,8 @@ namespace Nova.Framework.Tests
             void IAwakeable.OnAwake() => _sampleApplicationResult.onAwake = true;
 
             void IStartable.OnStart() => _sampleApplicationResult.onStart = true;
+
+            void IFixedUpdateable.OnFixedUpdate() => _sampleApplicationResult.onFixedUpdate = true;
 
             void IUpdateable.OnUpdate() => _sampleApplicationResult.onUpdate = true;
 

@@ -11,8 +11,17 @@ namespace Nova.Framework.Entity
     [Serializable]
     public abstract class EntityTickableBase : EntityBase
     {
+        private IEnumerable<IFixedUpdateable> _fixedUpdateables;
         private IEnumerable<ILateUpdateable> _lateUpdateables;
         private IEnumerable<IUpdateable> _updateables;
+
+        public virtual void FixedUpdate()
+        {
+            foreach (IFixedUpdateable fixedUpdateable in GetFixedUpdateableComponents())
+            {
+                fixedUpdateable.OnFixedUpdate();
+            }
+        }
 
         public virtual void Update()
         {
@@ -29,6 +38,13 @@ namespace Nova.Framework.Entity
                 lateUpdateable.OnLateUpdate();
             }
         }
+
+        /// <summary>
+        /// Gets all components in the entity that directly derive from IFixedUpdateable.
+        /// </summary>
+        /// <returns>The derived types.</returns>
+        private IEnumerable<IFixedUpdateable> GetFixedUpdateableComponents()
+            => _fixedUpdateables ??= _components.OfType<IFixedUpdateable>().Cast<IFixedUpdateable>();
 
         /// <summary>
         /// Gets all components in the entity that directly derive from IUpdateable.
