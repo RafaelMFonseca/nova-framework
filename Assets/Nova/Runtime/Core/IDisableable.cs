@@ -2,13 +2,13 @@
 {
     /// <summary>
     /// Allows user code to execute some logic when this object
-    /// is enable.
+    /// is disabled.
     /// </summary>
-    public interface IEnableable
+    public interface IDisableable
     {
         /// <summary>
-        /// Method invoked when the component is enabled.
+        /// Method invoked when the component is disabled.
         /// </summary>
-        void OnEnable();
+        void OnDisable();
     }
 }

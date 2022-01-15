@@ -108,9 +108,9 @@ namespace Nova.Framework.Tests
             }
         }
 
-        private interface IWorldComponent : IComponent { }
+        private interface IWorldComponent : IInitializable, IAwakeable, IStartable, IUpdateable, ILateUpdateable, IDestroyable, IEnableable, IDisableable, ILoadable, IComponent { }
 
-        private class WorldComponent : IWorldComponent, IStartable, IUpdateable, IDestroyable, IEnableable, ILoadable
+        private class WorldComponent : IWorldComponent
         {
             private SampleApplicationResult _sampleApplicationResult;
 
@@ -119,21 +119,21 @@ namespace Nova.Framework.Tests
                 _sampleApplicationResult = sampleApplicationResult;
             }
 
-            void ILoadable.OnPreLoad(IDependencyContainer container) => _sampleApplicationResult.onPreLoad = true;
+            void IInitializable.OnInitialize(IDependencyContainer container) => _sampleApplicationResult.onPreLoad = true;
 
             void ILoadable.OnLoad(IDependencyContainer container) => _sampleApplicationResult.onLoad = true;
 
-            void IStartable.OnAwake() => _sampleApplicationResult.onAwake = true;
+            void IAwakeable.OnAwake() => _sampleApplicationResult.onAwake = true;
 
             void IStartable.OnStart() => _sampleApplicationResult.onStart = true;
 
             void IUpdateable.OnUpdate() => _sampleApplicationResult.onUpdate = true;
 
-            void IUpdateable.OnLateUpdate() => _sampleApplicationResult.onLateUpdate = true;
+            void ILateUpdateable.OnLateUpdate() => _sampleApplicationResult.onLateUpdate = true;
 
             void IEnableable.OnEnable() => _sampleApplicationResult.onEnable = true;
 
-            void IEnableable.OnDisable() => _sampleApplicationResult.onDisable = true;
+            void IDisableable.OnDisable() => _sampleApplicationResult.onDisable = true;
 
             void IDestroyable.OnDestroy() => _sampleApplicationResult.onDestroy = true;
         }

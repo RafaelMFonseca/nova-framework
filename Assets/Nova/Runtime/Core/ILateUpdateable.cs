@@ -3,11 +3,11 @@
     /// <summary>
     /// Allows user code to execute some logic every frame.
     /// </summary>
-    public interface IUpdateable
+    public interface ILateUpdateable
     {
         /// <summary>
-        /// Method invoked every frame.
+        /// Method invoked after update.
         /// </summary>
-        void OnUpdate();
+        void OnLateUpdate();
     }
 }

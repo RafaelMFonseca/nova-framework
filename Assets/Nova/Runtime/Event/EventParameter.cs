@@ -2,7 +2,6 @@
 
 namespace Nova.Framework.Event
 {
-    [Serializable]
     public class EventParameter
     {
         private IEventEmitterInvoker _invoker;

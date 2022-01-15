@@ -4,7 +4,6 @@ using System.Collections.Generic;
 namespace Nova.Framework.Event
 {
     /// <inheritdoc />
-    [Serializable]
     public class EventEmitterInvoker : IEventEmitterInvoker
     {
         private bool _wasStopped;

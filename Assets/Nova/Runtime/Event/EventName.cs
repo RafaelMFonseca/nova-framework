@@ -2,7 +2,6 @@
 
 namespace Nova.Framework.Event
 {
-    [Serializable]
     public class EventName
     {
         private readonly string _name;

@@ -5,7 +5,6 @@ using System.Collections;
 
 namespace Nova.Framework.Dependency
 {
-    [Serializable]
     public class DependencyContainer : IDependencyContainer
     {
         private readonly List<IDependencyEntry> _cache = new List<IDependencyEntry>();

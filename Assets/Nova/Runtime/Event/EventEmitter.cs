@@ -4,7 +4,6 @@ using System.Collections.Generic;
 namespace Nova.Framework.Event
 {
     /// <inheritdoc />
-    [Serializable]
     public class EventEmitter : IEventEmitter
     {
         private readonly Dictionary<EventName, List<Action<EventParameter>>> _listeners = new Dictionary<EventName, List<Action<EventParameter>>>();

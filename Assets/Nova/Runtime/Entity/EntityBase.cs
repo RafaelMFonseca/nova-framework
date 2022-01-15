@@ -25,14 +25,14 @@ namespace Nova.Framework.Entity
         {
             _components = Array.AsReadOnly(GetComponents());
 
-            foreach (ILoadable loadable in GetLoadableComponents())
+            foreach (IInitializable initializable in GetInitializableComponents())
             {
-                DependencyActivator.PreActivate(loadable);
+                DependencyActivator.Initialize(initializable);
             }
 
-            foreach (IStartable startable in GetStartableComponents())
+            foreach (IAwakeable awakeable in GetAwakeableComponents())
             {
-                startable.OnAwake();
+                awakeable.OnAwake();
             }
         }
 
@@ -59,9 +59,9 @@ namespace Nova.Framework.Entity
 
         public virtual void OnDisable()
         {
-            foreach (IEnableable enableable in GetEnableableComponents())
+            foreach (IDisableable disableable in GetDisableableComponents())
             {
-                enableable.OnDisable();
+                disableable.OnDisable();
             }
         }
 
@@ -80,11 +80,11 @@ namespace Nova.Framework.Entity
         IEnumerator IEnumerable.GetEnumerator() => _components.GetEnumerator();
 
         /// <summary>
-        /// Gets all components in the entity that directly derive from IStartable.
+        /// Gets all components in the entity that directly derive from IInitializable.
         /// </summary>
         /// <returns>The derived types.</returns>
-        private IEnumerable<IStartable> GetStartableComponents()
-            => _components.OfType<IStartable>().Cast<IStartable>();
+        private IEnumerable<IInitializable> GetInitializableComponents()
+            => _components.OfType<IInitializable>().Cast<IInitializable>();
 
         /// <summary>
         /// Gets all components in the entity that directly derive from ILoadable.
@@ -94,11 +94,32 @@ namespace Nova.Framework.Entity
             => _components.OfType<ILoadable>().Cast<ILoadable>();
 
         /// <summary>
+        /// Gets all components in the entity that directly derive from IAwakeable.
+        /// </summary>
+        /// <returns>The derived types.</returns>
+        private IEnumerable<IAwakeable> GetAwakeableComponents()
+            => _components.OfType<IAwakeable>().Cast<IAwakeable>();
+
+        /// <summary>
+        /// Gets all components in the entity that directly derive from IStartable.
+        /// </summary>
+        /// <returns>The derived types.</returns>
+        private IEnumerable<IStartable> GetStartableComponents()
+            => _components.OfType<IStartable>().Cast<IStartable>();
+
+        /// <summary>
         /// Gets all components in the entity that directly derive from IEnableable.
         /// </summary>
         /// <returns>The derived types.</returns>
         private IEnumerable<IEnableable> GetEnableableComponents()
             => _components.OfType<IEnableable>().Cast<IEnableable>();
+
+        /// <summary>
+        /// Gets all components in the entity that directly derive from IDisableable.
+        /// </summary>
+        /// <returns>The derived types.</returns>
+        private IEnumerable<IDisableable> GetDisableableComponents()
+            => _components.OfType<IDisableable>().Cast<IDisableable>();
 
         /// <summary>
         /// Gets all components in the entity that directly derive from IDestroyable.

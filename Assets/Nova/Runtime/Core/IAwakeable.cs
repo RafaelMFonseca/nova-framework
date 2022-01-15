@@ -2,13 +2,13 @@
 {
     /// <summary>
     /// Allows user code to execute some logic when this object
-    /// is enable.
+    /// is awake.
     /// </summary>
-    public interface IEnableable
+    public interface IAwakeable
     {
         /// <summary>
-        /// Method invoked when the component is enabled.
+        /// Method invoked when the component is being loaded.
         /// </summary>
-        void OnEnable();
+        void OnAwake();
     }
 }

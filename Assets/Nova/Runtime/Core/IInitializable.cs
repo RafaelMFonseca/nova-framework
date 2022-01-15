@@ -5,12 +5,12 @@ namespace Nova.Framework.Core
     /// <summary>
     /// Alows user to inject dependencies.
     /// </summary>
-    public interface ILoadable
+    public interface IInitializable
     {
         /// <summary>
-        /// Method invoked when object is ready and has a dependency container.
+        /// Method invoked when object being initialized and has a dependency container.
         /// </summary>
         /// <param name="container">The container for this object.</param>
-        void OnLoad(IDependencyContainer container);
+        void OnInitialize(IDependencyContainer container);
     }
 }
