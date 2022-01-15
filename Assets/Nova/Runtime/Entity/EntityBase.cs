@@ -16,7 +16,7 @@ namespace Nova.Framework.Entity
     [Serializable]
     public abstract class EntityBase : MonoBehaviour, IEntity
     {
-        private ReadOnlyCollection<IComponent> _components;
+        protected ReadOnlyCollection<IComponent> _components;
 
         /// <inheritdoc />
         public abstract IComponent[] GetComponents();

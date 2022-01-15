@@ -42,8 +42,8 @@ namespace Nova.Framework.Tests
                 && _sampleApplicationResult.onLoad
                 && _sampleApplicationResult.onAwake
                 && _sampleApplicationResult.onStart
-                /* && _sampleApplicationResult.onUpdate
-                && _sampleApplicationResult.onLateUpdate */
+                && _sampleApplicationResult.onUpdate
+                && _sampleApplicationResult.onLateUpdate
                 && _sampleApplicationResult.onEnable
                 && _sampleApplicationResult.onDisable
                 && _sampleApplicationResult.onDestroy;
@@ -93,7 +93,7 @@ namespace Nova.Framework.Tests
             }
         }
 
-        private class WorldComponent_Entity : EntityBase
+        private class WorldComponent_Entity : EntityTickableBase
         {
             public SampleApplicationResult sampleApplicationResult = new SampleApplicationResult();
 
