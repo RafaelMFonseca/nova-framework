@@ -9,7 +9,7 @@ namespace Nova.Framework.Common.Coroutine
     /// <summary>
     /// Component to start and stop coroutines.
     /// </summary>
-    public class CoroutineComponent : ICoroutineComponent, IDestroyable
+    public class CoroutineRunnerComponent : ICoroutineRunnerComponent, IDestroyable
     {
         private EntityBase _entityBase;
 
@@ -20,13 +20,13 @@ namespace Nova.Framework.Common.Coroutine
         }
 
         /// <inheritdoc />
-        void ICoroutineComponent.Start(IEnumerator routine)
+        void ICoroutineRunnerComponent.Start(IEnumerator routine)
         {
             _entityBase?.StartCoroutine(routine);
         }
 
         /// <inheritdoc />
-        void ICoroutineComponent.Stop(IEnumerator routine)
+        void ICoroutineRunnerComponent.Stop(IEnumerator routine)
         {
             _entityBase?.StopCoroutine(routine);
         }

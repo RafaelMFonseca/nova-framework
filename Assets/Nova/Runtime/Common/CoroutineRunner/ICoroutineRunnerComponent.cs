@@ -6,7 +6,7 @@ namespace Nova.Framework.Common.Coroutine
     /// <summary>
     /// Component used to run coroutines.
     /// </summary>
-    public interface ICoroutineComponent : IComponentHost
+    public interface ICoroutineRunnerComponent : IComponentHost
     {
         /// <summary>
         /// Starts a new coroutine.

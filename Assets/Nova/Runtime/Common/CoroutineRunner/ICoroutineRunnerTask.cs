@@ -5,7 +5,7 @@ namespace Nova.Framework.Common.Coroutine
     /// <summary>
     /// Represents a running coroutine executed by the Unity Engine.
     /// </summary>
-    public interface ICoroutineTask
+    public interface ICoroutineRunnerTask
     {
         /// <summary>
         /// The <see cref="IEnumerator"/> of the coroutine.

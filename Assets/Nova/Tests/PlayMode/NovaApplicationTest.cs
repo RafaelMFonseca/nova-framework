@@ -32,7 +32,7 @@ namespace Nova.Framework.Tests
         {
             private INovaFrameworkBuilder _application;
             private GameObject _worldComponentGO;
-            private WorldComponent_Entity[] _worldComponentEntities;
+            private WorldComponentEntity[] _worldComponentEntities;
             private SampleApplicationResult[] _sampleApplicationResults;
 
             public bool IsTestFinished =>
@@ -58,13 +58,13 @@ namespace Nova.Framework.Tests
             {
                 _worldComponentGO = new GameObject();
 
-                _worldComponentEntities = new WorldComponent_Entity[2];
+                _worldComponentEntities = new WorldComponentEntity[2];
                 _sampleApplicationResults = new SampleApplicationResult[2];
 
-                _worldComponentEntities[0] = _worldComponentGO.AddComponent<WorldComponent_Entity>();
+                _worldComponentEntities[0] = _worldComponentGO.AddComponent<WorldComponentEntity>();
                 _sampleApplicationResults[0] = _worldComponentEntities[0].sampleApplicationResult;
 
-                _worldComponentEntities[1] = _worldComponentGO.AddComponent<WorldComponent_Entity>();
+                _worldComponentEntities[1] = _worldComponentGO.AddComponent<WorldComponentEntity>();
                 _sampleApplicationResults[1] = _worldComponentEntities[1].sampleApplicationResult;
 
                 StartCoroutine(DestroyAfterSeconds(0.1f));
@@ -96,7 +96,7 @@ namespace Nova.Framework.Tests
             }
         }
 
-        private class WorldComponent_Entity : EntityTickableBase
+        private class WorldComponentEntity : EntityTickableBase
         {
             public SampleApplicationResult sampleApplicationResult = new SampleApplicationResult();
 
