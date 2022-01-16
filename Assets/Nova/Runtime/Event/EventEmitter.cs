@@ -6,16 +6,16 @@ namespace Nova.Framework.Event
     /// <inheritdoc />
     public class EventEmitter : IEventEmitter
     {
-        private readonly Dictionary<EventName, List<Action<EventParameter>>> _listeners = new Dictionary<EventName, List<Action<EventParameter>>>();
+        private readonly Dictionary<IEventName, List<Action<IEventParameter>>> _listeners = new Dictionary<IEventName, List<Action<IEventParameter>>>();
 
         /// <inheritdoc />
-        IEventEmitterSubscription IEventEmitter.Subscribe(EventName name, Action<EventParameter> handler)
+        IEventEmitterSubscription IEventEmitter.Subscribe(IEventName name, Action<IEventParameter> handler)
         {
-            List<Action<EventParameter>> listeners;
+            List<Action<IEventParameter>> listeners;
 
             if (!_listeners.TryGetValue(name, out listeners))
             {
-                _listeners[name] = new List<Action<EventParameter>>() { handler };
+                _listeners[name] = new List<Action<IEventParameter>>() { handler };
             }
             else
             {
@@ -26,9 +26,9 @@ namespace Nova.Framework.Event
         }
 
         /// <inheritdoc />
-        void IEventEmitter.Unsubscribe(EventName name, Action<EventParameter> handler)
+        void IEventEmitter.Unsubscribe(IEventName name, Action<IEventParameter> handler)
         {
-            if (_listeners.TryGetValue(name, out List<Action<EventParameter>> listeners))
+            if (_listeners.TryGetValue(name, out List<Action<IEventParameter>> listeners))
             {
                 listeners.Remove(handler);
 
@@ -40,9 +40,9 @@ namespace Nova.Framework.Event
         }
 
         /// <inheritdoc />
-        void IEventEmitter.ClearSubscriptions(EventName name)
+        void IEventEmitter.ClearSubscriptions(IEventName name)
         {
-            if (_listeners.TryGetValue(name, out List<Action<EventParameter>> listeners))
+            if (_listeners.TryGetValue(name, out List<Action<IEventParameter>> listeners))
             {
                 listeners.Clear();
 
@@ -51,9 +51,9 @@ namespace Nova.Framework.Event
         }
 
         /// <inheritdoc />
-        void IEventEmitter.Emit(EventName name, EventParameter parameter)
+        void IEventEmitter.Emit(IEventName name, IEventParameter parameter)
         {
-            if (_listeners.TryGetValue(name, out List<Action<EventParameter>> listeners))
+            if (_listeners.TryGetValue(name, out List<Action<IEventParameter>> listeners))
             {
                 IEventEmitterInvoker invoker = new EventEmitterInvoker();
 

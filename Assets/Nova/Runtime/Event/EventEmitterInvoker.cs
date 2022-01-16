@@ -9,15 +9,15 @@ namespace Nova.Framework.Event
         private bool _wasStopped;
 
         /// <inheritdoc />
-        public void StopEventInvocation()
+        void IEventEmitterInvoker.StopEventInvocation()
         {
             _wasStopped = true;
         }
 
         /// <inheritdoc />
-        public void Emit(List<Action<EventParameter>> listeners, EventParameter parameter)
+        void IEventEmitterInvoker.Emit(List<Action<IEventParameter>> listeners, IEventParameter parameter)
         {
-            foreach (Action<EventParameter> listener in listeners)
+            foreach (Action<IEventParameter> listener in listeners)
             {
                 if (!_wasStopped)
                 {

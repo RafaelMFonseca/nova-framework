@@ -7,8 +7,8 @@ namespace Nova.Framework.Dependency
 {
     public class DependencyEntry : IDependencyEntry
     {
-        public readonly List<object> _entries;
-        public readonly Type _type;
+        private readonly List<object> _entries;
+        private readonly Type _type;
 
         /// <inheritdoc />
         Type IDependencyEntry.Type => _type;

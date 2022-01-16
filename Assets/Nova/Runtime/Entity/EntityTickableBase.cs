@@ -6,14 +6,14 @@ using Nova.Framework.Core;
 namespace Nova.Framework.Entity
 {
     /// <summary>
-    /// Class variant for <see cref="EntityBase"/> that runs the Update() and LateUpdate() methods.
+    /// Class variant for <see cref="EntityBase"/> that runs the FixedUpdate(), Update() and LateUpdate() methods.
     /// </summary>
     [Serializable]
     public abstract class EntityTickableBase : EntityBase
     {
-        private IEnumerable<IFixedUpdateable> _fixedUpdateables;
-        private IEnumerable<ILateUpdateable> _lateUpdateables;
-        private IEnumerable<IUpdateable> _updateables;
+        protected IEnumerable<IFixedUpdateable> _fixedUpdateables;
+        protected IEnumerable<ILateUpdateable> _lateUpdateables;
+        protected IEnumerable<IUpdateable> _updateables;
 
         public virtual void FixedUpdate()
         {
@@ -44,20 +44,20 @@ namespace Nova.Framework.Entity
         /// </summary>
         /// <returns>The derived types.</returns>
         private IEnumerable<IFixedUpdateable> GetFixedUpdateableComponents()
-            => _fixedUpdateables ??= _components.OfType<IFixedUpdateable>().Cast<IFixedUpdateable>();
+            => _fixedUpdateables ??= _components.OfType<IFixedUpdateable>();
 
         /// <summary>
         /// Gets all components in the entity that directly derive from IUpdateable.
         /// </summary>
         /// <returns>The derived types.</returns>
         private IEnumerable<IUpdateable> GetUpdateableComponents()
-            => _updateables ??= _components.OfType<IUpdateable>().Cast<IUpdateable>();
+            => _updateables ??= _components.OfType<IUpdateable>();
 
         /// <summary>
         /// Gets all components in the entity that directly derive from ILateUpdateable.
         /// </summary>
         /// <returns>The derived types.</returns>
         private IEnumerable<ILateUpdateable> GetLateUpdateableComponents()
-            => _lateUpdateables ??= _components.OfType<ILateUpdateable>().Cast<ILateUpdateable>();
+            => _lateUpdateables ??= _components.OfType<ILateUpdateable>();
     }
 }

@@ -10,7 +10,7 @@ namespace Nova.Framework.Common.Coroutine
         /// <summary>
         /// The <see cref="IEnumerator"/> of the coroutine.
         /// </summary>
-        IEnumerator Enumerator { get; set; }
+        IEnumerator Enumerator { get; }
 
         /// <summary>
         /// Attempt to stop the coroutine.

@@ -1,17 +1,20 @@
-﻿using System;
-
-namespace Nova.Framework.Event
+﻿namespace Nova.Framework.Event
 {
-    public class EventParameter
+    /// <summary>
+    /// Represents a parameter passed to a event.
+    /// </summary>
+    public class EventParameter : IEventParameter
     {
         private IEventEmitterInvoker _invoker;
 
-        public void ChangeInvokerTo(IEventEmitterInvoker invoker)
+        /// <inheritdoc />
+        void IEventParameter.ChangeInvokerTo(IEventEmitterInvoker invoker)
         {
             _invoker = invoker;
         }
 
-        public void StopEventInvocation()
+        /// <inheritdoc />
+        void IEventParameter.StopEventInvocation()
         {
             _invoker.StopEventInvocation();
         }

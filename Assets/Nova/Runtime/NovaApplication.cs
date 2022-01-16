@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using Nova.Framework.Core;
 using Nova.Framework.Event;
 using Nova.Framework.Shared;
 using Nova.Framework.Dependency;
@@ -44,6 +46,11 @@ namespace Nova.Framework
         public INovaFrameworkBuilder Start()
         {
             INovaFrameworkBuilder.ActiveInstance = this;
+
+            foreach (ILoadable loadable in _container.SelectMany(c => c.Dependencies).OfType<ILoadable>())  
+            {
+                loadable.OnLoad(_container);
+            }
 
             return this;
         }

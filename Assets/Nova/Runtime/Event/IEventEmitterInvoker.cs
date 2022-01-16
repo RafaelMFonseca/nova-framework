@@ -18,6 +18,6 @@ namespace Nova.Framework.Event
         /// </summary>
         /// <param name="listeners">All delegates to be invoked.</param>
         /// <param name="parameter">The parameter passed to all delegates invoked.</param>
-        void Emit(List<Action<EventParameter>> listeners, EventParameter parameter);
+        void Emit(List<Action<IEventParameter>> listeners, IEventParameter parameter);
     }
 }

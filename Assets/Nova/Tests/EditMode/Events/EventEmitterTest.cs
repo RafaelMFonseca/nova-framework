@@ -88,7 +88,7 @@ namespace Nova.Framework.Tests.Event
 
             eventEmitter.Subscribe(onResolutionChange, (p) => eventRaisedResult += (char)97);
             eventEmitter.Subscribe(onResolutionChange, (p) => eventRaisedResult += (char)98);
-            Action<EventParameter> handlerToRemove = (p) => eventRaisedResult += (char)99;
+            Action<IEventParameter> handlerToRemove = (p) => eventRaisedResult += (char)99;
             eventEmitter.Subscribe(onResolutionChange, handlerToRemove);
             eventEmitter.Subscribe(onResolutionChange, (p) => eventRaisedResult += (char)100);
 
