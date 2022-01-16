@@ -2,8 +2,6 @@ using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.TestTools;
-using UnityEngine.SceneManagement;
-using NUnit.Framework;
 using Nova.Framework.Core;
 using Nova.Framework.Dependency;
 using Nova.Framework.Controller;

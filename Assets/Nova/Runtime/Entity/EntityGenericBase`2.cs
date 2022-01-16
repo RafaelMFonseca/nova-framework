@@ -20,7 +20,7 @@ namespace Nova.Framework.Entity
 
             foreach (IComponentHost component in components.OfType<IComponentHost>())
             {
-                component.Host = this.gameObject;
+                component.SetHost(this.gameObject);
             }
 
             return components;
