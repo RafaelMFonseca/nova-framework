@@ -2,6 +2,7 @@
 using UnityEngine;
 using Nova.Framework.Core;
 using Nova.Framework.Dependency;
+using Nova.Framework.Entity;
 
 namespace Nova.Framework.Common.Coroutine
 {
@@ -10,7 +11,8 @@ namespace Nova.Framework.Common.Coroutine
     /// </summary>
     public class CoroutineController : ICoroutineController, ILoadable
     {
-        private readonly ICoroutineComponent _coroutineComponent;
+        private ICoroutineComponent _coroutineComponent;
+        private GameObject _coroutineGameObject;
 
         /// <inheritdoc />
         void ILoadable.OnLoad(IDependencyContainer container)
@@ -33,10 +35,11 @@ namespace Nova.Framework.Common.Coroutine
         /// </summary>
         private void InternalCreateGameObjectHost()
         {
-            GameObject gameObject = new GameObject();
-            gameObject.name = "[NovaFramework::Coroutines]";
+            _coroutineGameObject = new GameObject();
+            _coroutineGameObject.name = "[NovaFramework::Coroutines]";
+            _coroutineGameObject.AddComponent<EntityGenericBase<CoroutineComponent>>();
 
-            GameObject.DontDestroyOnLoad(gameObject);
+            GameObject.DontDestroyOnLoad(_coroutineGameObject);
         }
     }
 }
