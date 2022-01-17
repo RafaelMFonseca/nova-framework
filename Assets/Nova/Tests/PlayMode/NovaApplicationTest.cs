@@ -20,8 +20,8 @@ namespace Nova.Framework.Tests
 
         private class SampleApplicationResult
         {
-            public bool onPreLoad, onLoad, onAwake, onStart, onFixedUpdate, onUpdate, onLateUpdate, onDestroy, onEnable, onDisable = false;
-            public bool AllTrue => onPreLoad && onLoad && onAwake && onStart && onFixedUpdate && onUpdate && onLateUpdate && onEnable && onDisable && onDestroy;
+            public bool onAwake, onStart, onFixedUpdate, onUpdate, onLateUpdate, onDestroy, onEnable, onDisable = false;
+            public bool AllTrue => onAwake && onStart && onFixedUpdate && onUpdate && onLateUpdate && onEnable && onDisable && onDestroy;
         }
 
         private interface IWeatherController : IController { }
@@ -106,7 +106,7 @@ namespace Nova.Framework.Tests
             }
         }
 
-        private interface IWorldComponent : IInitializable, IAwakeable, IStartable, IFixedUpdateable, IUpdateable, ILateUpdateable, IDestroyable, IEnableable, IDisableable, ILoadable, IComponent { }
+        private interface IWorldComponent : IAwakeable, IStartable, IFixedUpdateable, IUpdateable, ILateUpdateable, IDestroyable, IEnableable, IDisableable, IComponent { }
 
         private class WorldComponent : IWorldComponent
         {
@@ -117,13 +117,9 @@ namespace Nova.Framework.Tests
                 _sampleApplicationResult = sampleApplicationResult;
             }
 
-            void IInitializable.OnInitialize(IDependencyContainer container) => _sampleApplicationResult.onPreLoad = true;
+            void IAwakeable.OnAwake(IDependencyContainer container) => _sampleApplicationResult.onAwake = true;
 
-            void ILoadable.OnLoad(IDependencyContainer container) => _sampleApplicationResult.onLoad = true;
-
-            void IAwakeable.OnAwake() => _sampleApplicationResult.onAwake = true;
-
-            void IStartable.OnStart() => _sampleApplicationResult.onStart = true;
+            void IStartable.OnStart(IDependencyContainer container) => _sampleApplicationResult.onStart = true;
 
             void IFixedUpdateable.OnFixedUpdate() => _sampleApplicationResult.onFixedUpdate = true;
 

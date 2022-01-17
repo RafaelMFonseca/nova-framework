@@ -25,27 +25,17 @@ namespace Nova.Framework.Entity
         {
             _components = Array.AsReadOnly(GetComponents());
 
-            foreach (IInitializable initializable in GetInitializableComponents())
-            {
-                DependencyActivator.Initialize(initializable);
-            }
-
             foreach (IAwakeable awakeable in GetAwakeableComponents())
             {
-                awakeable.OnAwake();
+                DependencyActivator.Activate(awakeable);
             }
         }
 
         public virtual void Start()
         {
-            foreach (ILoadable loadable in GetLoadableComponents())
-            {
-                DependencyActivator.Activate(loadable);
-            }
-
             foreach (IStartable startable in GetStartableComponents())
             {
-                startable.OnStart();
+                DependencyActivator.Activate(startable);
             }
         }
 
@@ -78,20 +68,6 @@ namespace Nova.Framework.Entity
 
         /// <inheritdoc />
         IEnumerator IEnumerable.GetEnumerator() => _components.GetEnumerator();
-
-        /// <summary>
-        /// Gets all components in the entity that directly derive from IInitializable.
-        /// </summary>
-        /// <returns>The derived types.</returns>
-        private IEnumerable<IInitializable> GetInitializableComponents()
-            => _components.OfType<IInitializable>();
-
-        /// <summary>
-        /// Gets all components in the entity that directly derive from ILoadable.
-        /// </summary>
-        /// <returns>The derived types.</returns>
-        private IEnumerable<ILoadable> GetLoadableComponents()
-            => _components.OfType<ILoadable>();
 
         /// <summary>
         /// Gets all components in the entity that directly derive from IAwakeable.

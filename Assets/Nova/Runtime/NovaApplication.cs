@@ -47,9 +47,9 @@ namespace Nova.Framework
         {
             INovaFrameworkBuilder.ActiveInstance = this;
 
-            foreach (ILoadable loadable in _container.SelectMany(c => c.Dependencies).OfType<ILoadable>())  
+            foreach (IStartable startable in _container.SelectMany(c => c.Dependencies).OfType<IStartable>()) 
             {
-                loadable.OnLoad(_container);
+                startable.OnStart(_container);
             }
 
             return this;

@@ -1,7 +1,8 @@
-﻿using System.Linq;
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.TestTools;
+using Nova.Framework.Core;
+using Nova.Framework.Dependency;
 using Nova.Framework.Shared;
 using Nova.Framework.Entity;
 using Nova.Framework.Entity.Component;
@@ -58,8 +59,9 @@ namespace Nova.Framework.Tests.Common.Coroutine
             void SetName(string name);
         }
 
-        private class ChangeGONameComponent : IChangeGONameComponent
+        private class ChangeGONameComponent : IChangeGONameComponent, IAwakeable
         {
+            private ICoroutineRunnerController _coroutineRunnerController;
             private GameObject _host;
 
             void IComponentHost.SetHost(GameObject host)
@@ -67,7 +69,24 @@ namespace Nova.Framework.Tests.Common.Coroutine
                 _host = host;
             }
 
-            void IChangeGONameComponent.SetName(string name) => _host.name = name;
+            void IAwakeable.OnAwake(IDependencyContainer container)
+            {
+                _coroutineRunnerController = container.Inject<ICoroutineRunnerController>();
+            }
+
+            void IChangeGONameComponent.SetName(string name)
+            {
+                _coroutineRunnerController.Start(SetNameAsync(name));
+            }
+
+            IEnumerator SetNameAsync(string name)
+            {
+                yield return null;
+
+                _host.name = name;
+
+                yield return null;
+            }
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace Nova.Framework.Core
+﻿using Nova.Framework.Dependency;
+
+namespace Nova.Framework.Core
 {
     /// <summary>
     /// Allows user code to execute some logic when this object
@@ -10,6 +12,6 @@
         /// Method invoked when the component is ready to start, having
         /// received its initial parameters.
         /// </summary>
-        void OnStart();
+        void OnStart(IDependencyContainer container);
     }
 }

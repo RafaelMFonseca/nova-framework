@@ -8,16 +8,16 @@ namespace Nova.Framework.Dependency
     public static class DependencyActivator
     {
         /// <summary>
-        /// Call a <see cref="IInitializable"/> passing <see cref="IDependencyContainer"/> by parameter.
+        /// Call a <see cref="IAwakeable"/> passing <see cref="IDependencyContainer"/> by parameter.
         /// </summary>
-        /// <param name="loadable">The object to inject the dependencies into.</param>
-        public static void Initialize(IInitializable initializable) => initializable.OnInitialize(Container);
+        /// <param name="awakeable">The object to inject the dependencies into.</param>
+        public static void Activate(IAwakeable awakeable) => awakeable.OnAwake(Container);
 
         /// <summary>
-        /// Call a <see cref="ILoadable"/> passing <see cref="IDependencyContainer"/> by parameter.
+        /// Call a <see cref="IStartable"/> passing <see cref="IDependencyContainer"/> by parameter.
         /// </summary>
-        /// <param name="loadable">The object to inject the dependencies into.</param>
-        public static void Activate(ILoadable loadable) => loadable.OnLoad(Container);
+        /// <param name="startable">The object to inject the dependencies into.</param>
+        public static void Activate(IStartable startable) => startable.OnStart(Container);
 
         /// <summary>
         /// The active container.
