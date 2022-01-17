@@ -1,27 +1,23 @@
-﻿using System.Collections;
-using UnityEngine;
-using Nova.Framework.Core;
-using Nova.Framework.Dependency;
+﻿using UnityEngine;
+using System.Collections;
+using Nova.Framework.Shared;
 
 namespace Nova.Framework.Common.Coroutine
 {
     /// <summary>
     /// Controller for execute coroutines.
     /// </summary>
-    public class CoroutineRunnerController : ICoroutineRunnerController, ILoadable
+    public class CoroutineRunnerController : ICoroutineRunnerController
     {
         private ICoroutineRunnerComponent _coroutineRunnerComponent;
         private GameObject _coroutineRunnerGameObject;
-
-        /// <inheritdoc />
-        void ILoadable.OnLoad(IDependencyContainer container)
-        {
-            InternalCreateGameObjectHost();
-        }
+        private object _lock = new object();
 
         /// <inheritdoc />
         ICoroutineRunnerTask ICoroutineRunnerController.Start(IEnumerator routine)
         {
+            InternalCreateGameObjectHost();
+
             ICoroutineRunnerTask task = new CoroutineRunnerTask(routine, () => _coroutineRunnerComponent.Stop(routine));
 
             _coroutineRunnerComponent.Start(routine);
@@ -34,11 +30,19 @@ namespace Nova.Framework.Common.Coroutine
         /// </summary>
         private void InternalCreateGameObjectHost()
         {
-            _coroutineRunnerGameObject = new GameObject();
-            _coroutineRunnerGameObject.name = "[NovaFramework::Coroutines]";
-            _coroutineRunnerGameObject.AddComponent<CoroutineRunnerEntity>();
+            if (_coroutineRunnerGameObject != null) return;
 
-            GameObject.DontDestroyOnLoad(_coroutineRunnerGameObject);
+            lock (_lock)
+            {
+                if (_coroutineRunnerGameObject != null) return;
+
+                _coroutineRunnerGameObject = new GameObject();
+                _coroutineRunnerGameObject.name = "[NovaFramework::Coroutines]";
+
+                _coroutineRunnerComponent = _coroutineRunnerGameObject.AddEntity<CoroutineRunnerEntity, ICoroutineRunnerComponent>();
+
+                GameObject.DontDestroyOnLoad(_coroutineRunnerGameObject);
+            }
         }
     }
 }

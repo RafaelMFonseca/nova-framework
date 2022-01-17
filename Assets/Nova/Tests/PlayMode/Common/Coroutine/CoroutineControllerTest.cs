@@ -1,12 +1,8 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.TestTools;
-using Nova.Framework.Core;
-using Nova.Framework.Dependency;
-using Nova.Framework.Controller;
+using Nova.Framework.Shared;
 using Nova.Framework.Entity;
 using Nova.Framework.Entity.Component;
 using Nova.Framework.Common.Coroutine;
@@ -23,10 +19,9 @@ namespace Nova.Framework.Tests.Common.Coroutine
 
         private class SampleNovaGameApplication : MonoBehaviour, IMonoBehaviourTest
         {
+            private IChangeGONameComponent _changeGONameComponent;
             private INovaFrameworkBuilder _application;
             private GameObject _gameObject;
-            private IEntity _entityGenericBase;
-            private IChangeGONameComponent _changeGONameComponent;
 
             public bool IsTestFinished => _gameObject != null && _gameObject.name == "test_name";
 
@@ -46,10 +41,7 @@ namespace Nova.Framework.Tests.Common.Coroutine
             {
                 _gameObject = new GameObject();
 
-                _entityGenericBase = _gameObject.AddComponent<ChangeGONameEntity>();
-
-                _changeGONameComponent = _entityGenericBase.OfType<ChangeGONameComponent>().FirstOrDefault();
-
+                _changeGONameComponent = _gameObject.AddEntity<ChangeGONameEntity, IChangeGONameComponent>();
                 _changeGONameComponent.SetName("test_name");
             }
 
