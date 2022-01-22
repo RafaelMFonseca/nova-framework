@@ -1,12 +1,12 @@
 ﻿using System.Collections;
 using Nova.Framework.Entity.Component;
 
-namespace Nova.Framework.Common.Coroutine
+namespace Nova.Framework.Common.Coroutiner
 {
     /// <summary>
     /// Component used to run coroutines.
     /// </summary>
-    public interface ICoroutineRunnerComponent : IComponentHost
+    public interface ICoroutinerComponent : IComponentHost
     {
         /// <summary>
         /// Starts a new coroutine.

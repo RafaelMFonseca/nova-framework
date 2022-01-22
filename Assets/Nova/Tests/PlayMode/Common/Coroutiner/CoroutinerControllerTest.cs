@@ -6,11 +6,11 @@ using Nova.Framework.Dependency;
 using Nova.Framework.Shared;
 using Nova.Framework.Entity;
 using Nova.Framework.Entity.Component;
-using Nova.Framework.Common.Coroutine;
+using Nova.Framework.Common.Coroutiner;
 
-namespace Nova.Framework.Tests.Common.Coroutine
+namespace Nova.Framework.Tests.Common.Coroutiner
 {
-    public class CoroutineControllerTest
+    public class CoroutinerControllerTest
     {
         [UnityTest]
         public IEnumerator Should_Create_Component_Then_Start_Coroutine()
@@ -32,7 +32,7 @@ namespace Nova.Framework.Tests.Common.Coroutine
 
                 _application.WithSettings(options =>
                 {
-                    options.AddSingleton(typeof(ICoroutineRunnerController), typeof(CoroutineRunnerController));
+                    options.AddSingleton(typeof(ICoroutinerController), typeof(CoroutinerController));
                 });
 
                 _application.Start();
@@ -61,7 +61,7 @@ namespace Nova.Framework.Tests.Common.Coroutine
 
         private class ChangeGONameComponent : IChangeGONameComponent, IAwakeable
         {
-            private ICoroutineRunnerController _coroutineRunnerController;
+            private ICoroutinerController _coroutinerController;
             private GameObject _host;
 
             void IComponentHost.SetHost(GameObject host)
@@ -71,12 +71,12 @@ namespace Nova.Framework.Tests.Common.Coroutine
 
             void IAwakeable.OnAwake(IDependencyContainer container)
             {
-                _coroutineRunnerController = container.Inject<ICoroutineRunnerController>();
+                _coroutinerController = container.Inject<ICoroutinerController>();
             }
 
             void IChangeGONameComponent.SetName(string name)
             {
-                _coroutineRunnerController.Start(SetNameAsync(name));
+                _coroutinerController.Start(SetNameAsync(name));
             }
 
             IEnumerator SetNameAsync(string name)

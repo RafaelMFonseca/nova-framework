@@ -1,5 +1,8 @@
 ﻿namespace Nova.Framework.Event
 {
+    /// <summary>
+    /// Used in order to provide values to an event.
+    /// </summary>
     public interface IEventParameter
     {
         /// <summary>

@@ -4,12 +4,12 @@ using Nova.Framework.Core;
 using Nova.Framework.Entity;
 using Nova.Framework.Entity.Component;
 
-namespace Nova.Framework.Common.Coroutine
+namespace Nova.Framework.Common.Coroutiner
 {
     /// <summary>
     /// Component to start and stop coroutines.
     /// </summary>
-    public class CoroutineRunnerComponent : ICoroutineRunnerComponent, IDestroyable
+    public class CoroutinerComponent : ICoroutinerComponent, IDestroyable
     {
         private EntityBase _entityBase;
 
@@ -20,13 +20,13 @@ namespace Nova.Framework.Common.Coroutine
         }
 
         /// <inheritdoc />
-        void ICoroutineRunnerComponent.Start(IEnumerator routine)
+        void ICoroutinerComponent.Start(IEnumerator routine)
         {
             _entityBase?.StartCoroutine(routine);
         }
 
         /// <inheritdoc />
-        void ICoroutineRunnerComponent.Stop(IEnumerator routine)
+        void ICoroutinerComponent.Stop(IEnumerator routine)
         {
             _entityBase?.StopCoroutine(routine);
         }
