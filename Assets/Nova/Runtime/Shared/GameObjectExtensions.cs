@@ -5,6 +5,9 @@ using Nova.Framework.Entity.Component;
 
 namespace Nova.Framework.Shared
 {
+    /// <summary>
+    /// Provides extension methods for <see cref="GameObject" />
+    /// </summary>
     public static class GameObjectExtensions
     {
         /// <summary>

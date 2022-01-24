@@ -2,6 +2,9 @@
 
 namespace Nova.Framework.Shared
 {
+    /// <summary>
+    /// Provides extension methods for <see cref="IEventParameter" />
+    /// </summary>
     public static class EventParameterExtensions
     {
         /// <summary>
